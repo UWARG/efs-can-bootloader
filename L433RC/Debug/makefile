@@ -35,34 +35,34 @@ $(wildcard ../makefile.init) \
 $(wildcard ../makefile.targets) \
 
 
-BUILD_ARTIFACT_NAME := L433RC-example-project
+BUILD_ARTIFACT_NAME := L433RC
 BUILD_ARTIFACT_EXTENSION := elf
 BUILD_ARTIFACT_PREFIX :=
 BUILD_ARTIFACT := $(BUILD_ARTIFACT_PREFIX)$(BUILD_ARTIFACT_NAME)$(if $(BUILD_ARTIFACT_EXTENSION),.$(BUILD_ARTIFACT_EXTENSION),)
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXECUTABLES += \
-L433RC-example-project.elf \
+L433RC.elf \
 
 MAP_FILES += \
-L433RC-example-project.map \
+L433RC.map \
 
 SIZE_OUTPUT += \
 default.size.stdout \
 
 OBJDUMP_LIST += \
-L433RC-example-project.list \
+L433RC.list \
 
 
 # All Target
 all: main-build
 
 # Main-build Target
-main-build: L433RC-example-project.elf secondary-outputs
+main-build: L433RC.elf secondary-outputs
 
 # Tool invocations
-L433RC-example-project.elf L433RC-example-project.map: $(OBJS) $(USER_OBJS) C:\Users\sjina\STM32CubeIDE\workspace_1.16.0\efs-canard\L433RC-example-project\STM32L433RCTXP_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "L433RC-example-project.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\sjina\STM32CubeIDE\workspace_1.16.0\efs-canard\L433RC-example-project\STM32L433RCTXP_FLASH.ld" --specs=nosys.specs -Wl,-Map="L433RC-example-project.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+L433RC.elf L433RC.map: $(OBJS) $(USER_OBJS) C:\Users\sjina\STM32CubeIDE\efs-can-bootloader\L433RC\STM32L433RCTXP_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "L433RC.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\sjina\STM32CubeIDE\efs-can-bootloader\L433RC\STM32L433RCTXP_FLASH.ld" --specs=nosys.specs -Wl,-Map="L433RC.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -71,14 +71,14 @@ default.size.stdout: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
 	@echo 'Finished building: $@'
 	@echo ' '
 
-L433RC-example-project.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "L433RC-example-project.list"
+L433RC.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "L433RC.list"
 	@echo 'Finished building: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) L433RC-example-project.elf L433RC-example-project.list L433RC-example-project.map default.size.stdout
+	-$(RM) L433RC.elf L433RC.list L433RC.map default.size.stdout
 	-@echo ' '
 
 secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST)
